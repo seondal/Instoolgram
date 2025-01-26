@@ -13,6 +13,17 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors: {
+        pico: {
+          primary: "var(--pico-primary)",
+          "primary-background": "var(--pico-primary-background)",
+          underline: "var(--pico-primary-underline)",
+          hover: "var(--pico-primary-hover)",
+          "hover-background": "var(--pico-primary-hover-background)",
+          focus: "var(--pico-primary-focus)",
+          inverse: "var(--pico-primary-inverse)",
+        },
+      },
     },
   },
   plugins: [],
