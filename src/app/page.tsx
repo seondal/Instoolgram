@@ -1,7 +1,8 @@
 "use client";
 
-import { SITE } from "@/constants/env";
 import { FormEvent, useState } from "react";
+
+const MAGIC_STRING = "?__a=1&__d=dis" as const;
 
 function getRefinedUrl(url: string) {
   const splitted = url.split("/");
@@ -25,13 +26,14 @@ function getRefinedUrl(url: string) {
 
 export default function Home() {
   const [value, setValue] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [link, setLink] = useState();
+  const [parsingLink, setParsingLink] = useState<string>();
+  const [code, setCode] = useState("");
+  const [downloadLink, setDownloadLink] = useState<string>();
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    setLink(undefined);
+    setParsingLink(undefined);
+    setDownloadLink(undefined);
 
     const refinedUrl = getRefinedUrl(value);
 
@@ -45,23 +47,30 @@ export default function Home() {
       return;
     }
 
-    setLoading(true);
-    fetch(`${SITE}/api?url=${refinedUrl}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setLink(data.video);
-        setLoading(false);
-      })
-      .catch((error) => {
-        alert(
-          "에러가 발생했어요. 아래 조건을 확인해주세요. 계속 문제가 발생할 경우 개발자에게 문의해주세요"
-        );
-        setLoading(false);
-      });
+    setParsingLink(refinedUrl + MAGIC_STRING);
   }
 
-  function onClickDownload() {
-    window.open(link);
+  function openUrl(url: string) {
+    window.open(url);
+  }
+
+  function onClickComplete() {
+    try {
+      const data = JSON.parse(code);
+      const video_url = () => {
+        if ("graphql" in data && "shortcode_media" in data.graphql) {
+          return data.graphql.shortcode_media.video_url;
+        }
+        if ("items" in data) {
+          return data.items[0].video_versions[0].url;
+        }
+        alert("제대로 복사되었는지 확인해주세요");
+        return undefined;
+      };
+      setDownloadLink(video_url);
+    } catch (error) {
+      alert("제대로 복사되었는지 확인해주세요");
+    }
   }
 
   return (
@@ -75,32 +84,46 @@ export default function Home() {
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-          <input type="submit" value="완료" disabled={loading} />
+          <input type="submit" value="완료" />
         </fieldset>
       </form>
-      {link && (
+      {parsingLink ? (
         <article>
-          {!loading && (
-            <button className="secondary" onClick={onClickDownload}>
-              다운받으러 가기
-            </button>
-          )}
+          <button className="secondary" onClick={() => openUrl(parsingLink)}>
+            접속하기
+          </button>
+          <textarea
+            placeholder="위 버튼을 눌렀을 때 나오는 모든 글자를 복사에서 붙여넣어주세요"
+            className="h-40 mt-4"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
+          <button
+            className="secondary"
+            onClick={onClickComplete}
+            disabled={!code}>
+            완료
+          </button>
+        </article>
+      ) : (
+        <article>
+          <ul className="pl-4 mb-0 text-sm">
+            <li>릴스 게시물에서 [공유] - [링크 복사] 후 붙여넣기 해주세요</li>
+            <li>
+              <b>https://www.instagram.com/reel/</b> 로 시작되는 링크여야합니다
+            </li>
+            <li>
+              브라우저에서 인스타그램에 로그인한 상태로 진행해야 정상적으로
+              진행됩니다.
+            </li>
+          </ul>
         </article>
       )}
-      <article>
-        <ul>
-          <li>원하는 릴스에서 [공유] - [링크 복사] 후 붙여넣기 해주세요</li>
-          <li>
-            <b>https://www.instagram.com/reel/</b> 로 시작되는 링크여야합니다
-          </li>
-          <li>전체 공개 게시물만 가능합니다</li>
-          <li>
-            <b>단 한번이라도</b> 계정을{" "}
-            <strong className="text-pico-underline">비공개</strong> 처리했던
-            개인 계정의 릴스는 다운로드가 불가능합니다
-          </li>
-        </ul>
-      </article>
+      {downloadLink && (
+        <button className="contrast" onClick={() => openUrl(downloadLink)}>
+          다운로드하러 가기
+        </button>
+      )}
     </>
   );
 }
