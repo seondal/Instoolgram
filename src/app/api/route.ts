@@ -14,8 +14,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const res = await fetch(new_url);
-    const log = await res.text();
-    console.log(log);
+    console.log("🚀 ~ GET ~ res:", res);
     const data = await res.json();
 
     const video_url = data.graphql.shortcode_media.video_url;
