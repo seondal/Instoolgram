@@ -25,9 +25,13 @@ function getRefinedUrl(url: string) {
 
 export default function Home() {
   const [value, setValue] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [link, setLink] = useState();
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    setLink(undefined);
 
     const refinedUrl = getRefinedUrl(value);
 
@@ -41,14 +45,23 @@ export default function Home() {
       return;
     }
 
+    setLoading(true);
     fetch(`${SITE}/api?url=${refinedUrl}`)
-      .then((res) => res.text())
-      .then((data) => console.log(data))
-      .catch((error) =>
+      .then((res) => res.json())
+      .then((data) => {
+        setLink(data.video);
+        setLoading(false);
+      })
+      .catch((error) => {
         alert(
-          "에러가 발생했어요. 잠시 후 다시 시도해주세요. 계속 문제가 발생할 경우 개발자에게 문의해주세요"
-        )
-      );
+          "에러가 발생했어요. 아래 조건을 확인해주세요. 계속 문제가 발생할 경우 개발자에게 문의해주세요"
+        );
+        setLoading(false);
+      });
+  }
+
+  function onClickDownload() {
+    window.open(link);
   }
 
   return (
@@ -62,9 +75,18 @@ export default function Home() {
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-          <input type="submit" value="완료" />
+          <input type="submit" value="완료" disabled={loading} />
         </fieldset>
       </form>
+      {link && (
+        <article>
+          {!loading && (
+            <button className="secondary" onClick={onClickDownload}>
+              다운받으러 가기
+            </button>
+          )}
+        </article>
+      )}
       <article>
         <ul>
           <li>원하는 릴스에서 [공유] - [링크 복사] 후 붙여넣기 해주세요</li>
