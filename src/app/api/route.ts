@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const url = req.nextUrl.searchParams.get("url");
 
   if (!url) {
-    return NextResponse.error;
+    return NextResponse.error();
   }
 
   const new_url = url + MAGIC_STRING;

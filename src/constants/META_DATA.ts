@@ -1,16 +1,16 @@
 import { Metadata } from "next";
-import { GOOGLE_ADSENSE, GOOGLE_SEARCH, NAVER_SEARCH } from "./ENV";
+import { GOOGLE_ADSENSE, GOOGLE_SEARCH, NAVER_SEARCH } from "./env";
 
 export const META_DATA: Metadata = {
   title: {
-    default: `TITLE`,
-    template: `TITLE | %s`,
+    default: `Instoolgram`,
+    template: `Instoolgram | %s`,
   },
-  description: "description",
+  description: "인스타그램 릴스 다운로드",
   openGraph: {
-    title: "title",
-    description: "description",
-    images: ["/meta/og.png"],
+    title: "Instoolgram",
+    description: "인스타그램 릴스 다운로드",
+    // images: ["/meta/og.png"],
   },
   icons: {
     icon: "/meta/favicon.ico",
