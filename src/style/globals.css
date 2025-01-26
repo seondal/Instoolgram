@@ -5,3 +5,8 @@
 html {
   padding: 2rem;
 }
+
+body {
+  max-width: 700px;
+  margin: auto;
+}

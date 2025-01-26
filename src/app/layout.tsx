@@ -35,7 +35,11 @@ export default function RootLayout({
         </header>
         <main className="">{children}</main>
         <GoogleAnalytics gaId={GOOGLE_ANALYITICS} />
-        <footer className="text-center p-4"></footer>
+        <footer className="text-pico-primary-background text-xs">
+          본 웹사이트는 합법적인 용도로만 사용해야 하며, 모든 콘텐츠의 저작권은
+          해당 권리자에게 있습니다. 사용자가 본 서비스를 이용하여 저작권을
+          침해하는 경우, 그에 대한 모든 책임은 사용자 본인에게 있습니다.
+        </footer>
       </body>
     </html>
   );
