@@ -1,6 +1,6 @@
 "use client";
 
-import { SITE } from "@/constants/ENV";
+import { SITE } from "@/constants/env";
 import { FormEvent, useState } from "react";
 
 function getRefinedUrl(url: string) {

@@ -4,7 +4,7 @@ import "@/style/theme.css";
 
 import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { DEVELOPER, GOOGLE_ADSENSE, GOOGLE_ANALYITICS } from "@/constants/ENV";
+import { DEVELOPER, GOOGLE_ADSENSE, GOOGLE_ANALYITICS } from "@/constants/env";
 import { META_DATA } from "@/constants/META_DATA";
 
 export const metadata = META_DATA;
