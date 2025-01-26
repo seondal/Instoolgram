@@ -17,7 +17,14 @@ export async function GET(req: NextRequest) {
     console.log("🚀 ~ GET ~ res:", res);
     const data = await res.json();
 
-    const video_url = data.graphql.shortcode_media.video_url;
+    const video_url = () => {
+      if ("graphql" in data && "shortcode_media" in data.graphql) {
+        return data.graphql.shortcode_media.video_url;
+      }
+      if ("items" in data) {
+        return data.video_versions[0].url;
+      }
+    };
 
     return NextResponse.json({ video: video_url });
   } catch (error) {
