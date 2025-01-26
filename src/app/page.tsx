@@ -91,7 +91,7 @@ export default function Home() {
         <ul>
           <li>원하는 릴스에서 [공유] - [링크 복사] 후 붙여넣기 해주세요</li>
           <li>
-            <b>instagram.com/reel/</b> 로 시작되는 링크여야합니다
+            <b>https://www.instagram.com/reel/</b> 로 시작되는 링크여야합니다
           </li>
           <li>전체 공개 게시물만 가능합니다</li>
           <li>
