@@ -1,11 +1,18 @@
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
   --pico-primary-background: #e73879;
-  --pico-primary-hover-background: #7e1891;
-  --pico-primary: #fcc737;
-  --pico-primary-underline: #fcc737;
+  --pico-text-selection-color: rgb(
+    231,
+    56,
+    121,
+    0.3
+  ); /*transparent primary-background*/
+  --pico-primary-hover-background: #fcc737;
+  --pico-primary-focus: #fcc737;
+  --pico-primary: #7e1891;
+  --pico-primary-underline: #7e1891;
   --pico-primary-hover: #f26b0f;
-  --pico-primary-inverse: #000000;
+  --pico-primary-inverse: #fff;
 }
 
 @media only screen and (prefers-color-scheme: dark) {
@@ -29,7 +36,14 @@
 [data-theme="dark"] {
   :root:not([data-theme]) {
     --pico-primary-background: #e73879;
+    --pico-text-selection-color: rgb(
+      231,
+      56,
+      121,
+      0.3
+    ); /*transparent primary-background*/
     --pico-primary-hover-background: #7e1891;
+    --pico-primary-focus: #7e1891;
     --pico-primary: #fcc737;
     --pico-primary-underline: #fcc737;
     --pico-primary-hover: #f26b0f;

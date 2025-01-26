@@ -1,5 +1,6 @@
 "use client";
 
+import copyToClipboard from "@/utils/copyToClipboard";
 import { FormEvent, useState } from "react";
 
 const MAGIC_STRING = "?__a=1&__d=dis" as const;
@@ -51,7 +52,7 @@ export default function Home() {
   }
 
   function openUrl(url: string) {
-    window.open(url);
+    window.open(url, "_blank");
   }
 
   function onClickComplete() {
@@ -87,43 +88,58 @@ export default function Home() {
           <input type="submit" value="완료" />
         </fieldset>
       </form>
-      {parsingLink ? (
+      {parsingLink && (
         <article>
-          <button className="secondary" onClick={() => openUrl(parsingLink)}>
-            접속하기
-          </button>
+          <nav className="justify-start gap-4">
+            <button className="secondary" onClick={() => openUrl(parsingLink)}>
+              접속하기
+            </button>
+            <button
+              className="secondary"
+              onClick={() =>
+                copyToClipboard(
+                  parsingLink,
+                  "접속 링크가 복사되었습니다. 브라우저에 새 탭을 열어서 주소창에 붙여넣기 해주세요"
+                )
+              }>
+              (모바일용) 복사하기
+            </button>
+          </nav>
           <textarea
-            placeholder="위 버튼을 눌렀을 때 나오는 모든 글자를 복사에서 붙여넣어주세요"
-            className="h-40 mt-4"
+            placeholder="위 버튼을 눌렀을 때 나오는 모든 글자를 복사해서 붙여넣어주세요"
+            className="h-40 mt-4 text-xs"
             value={code}
             onChange={(e) => setCode(e.target.value)}
           />
-          <button
-            className="secondary"
-            onClick={onClickComplete}
-            disabled={!code}>
-            완료
-          </button>
-        </article>
-      ) : (
-        <article>
-          <ul className="pl-4 mb-0 text-sm">
-            <li>릴스 게시물에서 [공유] - [링크 복사] 후 붙여넣기 해주세요</li>
-            <li>
-              <b>https://www.instagram.com/reel/</b> 로 시작되는 링크여야합니다
-            </li>
-            <li>
-              브라우저에서 인스타그램에 로그인한 상태로 진행해야 정상적으로
-              진행됩니다.
-            </li>
-          </ul>
+          <nav>
+            <button
+              className="contrast"
+              onClick={onClickComplete}
+              disabled={!code}>
+              완료
+            </button>
+            {downloadLink && (
+              <button onClick={() => openUrl(downloadLink)}>
+                영상 다운로드하러 가기
+              </button>
+            )}
+          </nav>
         </article>
       )}
-      {downloadLink && (
-        <button className="contrast" onClick={() => openUrl(downloadLink)}>
-          다운로드하러 가기
-        </button>
-      )}
+
+      <article>
+        <ul className="pl-4 mb-0 text-sm">
+          <li>본 서비스는 PC환경에서 진행해주세요.</li>
+          <li>릴스 게시물에서 [공유] - [링크 복사] 후 붙여넣기 해주세요</li>
+          <li>
+            <b>https://www.instagram.com/reel/</b> 로 시작되는 링크여야합니다
+          </li>
+          <li>
+            브라우저에서 인스타그램에 로그인한 상태로 진행해야 정상적으로
+            진행됩니다.
+          </li>
+        </ul>
+      </article>
     </>
   );
 }
