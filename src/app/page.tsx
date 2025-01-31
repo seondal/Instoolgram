@@ -1,6 +1,7 @@
 "use client";
 
 import copyToClipboard from "@/utils/copyToClipboard";
+import { sendGAEvent } from "@next/third-parties/google";
 import { FormEvent, useState } from "react";
 
 const MAGIC_STRING = "?__a=1&__d=dis" as const;
@@ -33,6 +34,7 @@ export default function Home() {
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    sendGAEvent("event", "search_reel", { reel_url: value });
     setParsingLink(undefined);
     setDownloadLink(undefined);
 
@@ -68,6 +70,7 @@ export default function Home() {
         alert("제대로 복사되었는지 확인해주세요");
         return undefined;
       };
+      sendGAEvent("event", "download_success", { success_reel_url: value });
       setDownloadLink(video_url);
     } catch (error) {
       alert("제대로 복사되었는지 확인해주세요");

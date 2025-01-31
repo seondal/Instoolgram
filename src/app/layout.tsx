@@ -36,7 +36,7 @@ export default function RootLayout({
           </nav>
         </header>
         <main className="">{children}</main>
-        <GoogleAnalytics gaId={GOOGLE_ANALYITICS} />
+        <GoogleAnalytics gaId={GOOGLE_ANALYITICS} debugMode />
         <footer>
           <div className="text-xs mb-4">
             본 웹사이트는 합법적인 용도로만 사용해야 하며, 모든 콘텐츠의
