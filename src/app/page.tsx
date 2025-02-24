@@ -1,5 +1,6 @@
 "use client";
 
+import { DEVELOPER } from "@/constants/env";
 import copyToClipboard from "@/utils/copyToClipboard";
 import { sendGAEvent } from "@next/third-parties/google";
 import { FormEvent, useState } from "react";
@@ -79,6 +80,16 @@ export default function Home() {
 
   return (
     <>
+      <article className="text-center">
+        <h5>
+          인스타그램 정책 변경으로 인해 현재 이용이 불가능합니다.
+          <br />
+          조만간 업데이트하고 인스타에 소식 올리겠습니다
+          <br />
+        </h5>
+        <a href={DEVELOPER}>인스타그램 : @dev_seondal</a>
+      </article>
+      <hr />
       <form onSubmit={onSubmit}>
         <fieldset role="group">
           <input
