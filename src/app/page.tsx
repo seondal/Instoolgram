@@ -1,11 +1,11 @@
 "use client";
 
-import { DEVELOPER } from "@/constants/env";
 import copyToClipboard from "@/utils/copyToClipboard";
 import { sendGAEvent } from "@next/third-parties/google";
 import { FormEvent, useState } from "react";
 
-const MAGIC_STRING = "?__a=1&__d=dis" as const;
+const MAGIC_STRING = (id: string) =>
+  `https://www.instagram.com/graphql/query/?doc_id=8845758582119845&variables={%22shortcode%22:%22${id}%22}` as const;
 
 function getRefinedUrl(url: string) {
   const splitted = url.split("/");
@@ -22,7 +22,7 @@ function getRefinedUrl(url: string) {
     return "NOT_REEL";
   }
 
-  const refined_url = "https://www.instagram.com/reel/" + splitted[4];
+  const refined_url = splitted[4];
 
   return refined_url;
 }
@@ -51,7 +51,7 @@ export default function Home() {
       return;
     }
 
-    setParsingLink(refinedUrl + MAGIC_STRING);
+    setParsingLink(MAGIC_STRING(refinedUrl));
   }
 
   function openUrl(url: string) {
@@ -60,13 +60,15 @@ export default function Home() {
 
   function onClickComplete() {
     try {
-      const data = JSON.parse(code);
+      const codeJson = JSON.parse(code);
       const video_url = () => {
-        if ("graphql" in data && "shortcode_media" in data.graphql) {
-          return data.graphql.shortcode_media.video_url;
-        }
-        if ("items" in data) {
-          return data.items[0].video_versions[0].url;
+        if (
+          "data" in codeJson &&
+          "xdt_shortcode_media" in codeJson.data &&
+          "video_url" in codeJson.data.xdt_shortcode_media
+        ) {
+          const videoUrl = codeJson.data.xdt_shortcode_media.video_url;
+          return videoUrl;
         }
         alert("제대로 복사되었는지 확인해주세요");
         return undefined;
@@ -80,7 +82,7 @@ export default function Home() {
 
   return (
     <>
-      <article className="text-center">
+      {/* <article className="text-center">
         <h5>
           인스타그램 정책 변경으로 인해 현재 이용이 불가능합니다.
           <br />
@@ -88,8 +90,8 @@ export default function Home() {
           <br />
         </h5>
         <a href={DEVELOPER}>인스타그램 : @dev_seondal</a>
-      </article>
-      <hr />
+      </article> 
+      <hr /> */}
       <form onSubmit={onSubmit}>
         <fieldset role="group">
           <input
@@ -115,7 +117,8 @@ export default function Home() {
                   parsingLink,
                   "접속 링크가 복사되었습니다. 브라우저에 새 탭을 열어서 주소창에 붙여넣기 해주세요"
                 )
-              }>
+              }
+            >
               (모바일용) 복사하기
             </button>
           </nav>
@@ -129,7 +132,8 @@ export default function Home() {
             <button
               className="contrast"
               onClick={onClickComplete}
-              disabled={!code}>
+              disabled={!code}
+            >
               완료
             </button>
             {downloadLink && (
@@ -149,8 +153,8 @@ export default function Home() {
             <b>https://www.instagram.com/reel/</b> 로 시작되는 링크여야합니다
           </li>
           <li>
-            브라우저에서 인스타그램에 로그인한 상태로 진행해야 정상적으로
-            진행됩니다.
+            브라우저에서 <b>인스타그램에 로그인 된</b> 상태로 진행해야
+            정상적으로 진행됩니다.
           </li>
         </ul>
       </article>
