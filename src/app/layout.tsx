@@ -20,7 +20,8 @@ export default function RootLayout({
         <Script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${GOOGLE_ADSENSE}`}
-          crossOrigin="anonymous"></Script>
+          crossOrigin="anonymous"
+        ></Script>
       </head>
       <body>
         <header>
@@ -44,7 +45,8 @@ export default function RootLayout({
             저작권을 침해하는 경우, 그에 대한 모든 책임은 사용자 본인에게
             있습니다.
           </div>
-          <a href="https://buymeacoffee.com/seondal">Buy me a coffee</a>
+          {/* <a href="https://buymeacoffee.com/seondal">Buy me a coffee</a> */}
+          <a href="https://litt.ly/seondal">제작자 응원하기</a>
         </footer>
       </body>
     </html>
