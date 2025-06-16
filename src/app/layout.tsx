@@ -4,7 +4,12 @@ import "@/style/theme.css";
 
 import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { DEVELOPER, GOOGLE_ADSENSE, GOOGLE_ANALYITICS } from "@/constants/env";
+import {
+  DEVELOPER,
+  FORM,
+  GOOGLE_ADSENSE,
+  GOOGLE_ANALYITICS,
+} from "@/constants/env";
 import { META_DATA } from "@/constants/META_DATA";
 
 export const metadata = META_DATA;
@@ -20,8 +25,7 @@ export default function RootLayout({
         <Script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${GOOGLE_ADSENSE}`}
-          crossOrigin="anonymous"
-        ></Script>
+          crossOrigin="anonymous"></Script>
       </head>
       <body>
         <header>
@@ -46,7 +50,7 @@ export default function RootLayout({
             있습니다.
           </div>
           {/* <a href="https://buymeacoffee.com/seondal">Buy me a coffee</a> */}
-          <a href="https://litt.ly/seondal">제작자 응원하기</a>
+          <a href={FORM}>서비스에 대한 의견을 남겨주세요!</a>
         </footer>
       </body>
     </html>
