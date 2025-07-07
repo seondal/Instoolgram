@@ -11,6 +11,7 @@ import {
   GOOGLE_ANALYITICS,
 } from "@/constants/env";
 import { META_DATA } from "@/constants/META_DATA";
+import Link from "next/link";
 
 export const metadata = META_DATA;
 
@@ -29,15 +30,27 @@ export default function RootLayout({
       </head>
       <body>
         <header>
-          <nav className="items-center">
-            <h1>
-              Ins
-              <strong className="text-pico-primary-background">tool</strong>
-              gram
-            </h1>
-            <a href={DEVELOPER} className="text-xs">
-              made by Seondal
-            </a>
+          <nav>
+            <ul>
+              <h1>
+                Ins
+                <strong className="text-pico-primary-background">tool</strong>
+                gram
+              </h1>
+            </ul>
+            <ul>
+              <li>
+                <Link href="/">릴스</Link>
+              </li>
+              <li>
+                <Link href="/story">하이라이트</Link>
+              </li>
+              <li>
+                <Link href={DEVELOPER} className="text-xs">
+                  made by Seondal
+                </Link>
+              </li>
+            </ul>
           </nav>
         </header>
         <main className="">{children}</main>
