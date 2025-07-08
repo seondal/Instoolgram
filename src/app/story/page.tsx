@@ -45,7 +45,7 @@ export default function Home() {
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    sendGAEvent("event", "search_highlight", { reel_url: value });
+    sendGAEvent("event", "search_highlight", { highlight_url: value });
     setParsingLink(undefined);
     setDownloadLink(undefined);
 
