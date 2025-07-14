@@ -6,3 +6,5 @@ export const GOOGLE_SEARCH = process.env.NEXT_PUBLIC_GOOGLE_SEARCH || "";
 export const DEVELOPER = process.env.NEXT_PUBLIC_DEVELOPER || "";
 export const FORM = process.env.NEXT_PUBLIC_FORM || "";
 export const SITE = process.env.NEXT_PUBLIC_SITE || "";
+
+export const APP_ENV = process.env.NEXT_PUBLIC_APP_ENV || "";
